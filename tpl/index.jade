@@ -15,8 +15,10 @@ html
 				h1(style='padding: 40px 15px;text-align: center;')
 					Welcome to nodejs chat
 			.row
-				.col-md-12
-					input(type="text",class="form-control" placeholder="Your chat name"  name="user")
+				.col-md-11
+					input(type="text",class="form-control" ,id="username", placeholder="Your chat name"  name="user")
+				.col-md-1
+					input(type="button",class='btn btn-success' name="Add User",id='addUser',value='Add User')
 			.row
 				.col-md-12
 					p(style='padding: 40px 15px;text-align: center;')
@@ -25,32 +27,19 @@ html
 				.col-md-4
 					img(src='http://placehold.it/350x350')
 				.col-md-4
-					#chatdisplay
-						#chatinput(style='width:100%;height:300px;border:1px solid black')
+					#chatdisplay(style='width:100%;height:300px;;border:1px solid black;overflow-y:scroll')
+						#chatinput(style='width:100%;height:auto;')
 					.row
 						.col-md-12
-							input(type="text",class="form-control"  name="user")
+							input(type="text",class="form-control",id='message' name="user")
 							input(type="button",class='btn btn-success' name="user",id='send',value='send')
 				.col-md-4
 					.row
 						.col-md-12
 							div(class='table-responsive')
 								table(class='table table-bordered table-striped')
-									tbody
-										tr
-											td 
-												|user1
-												input(type="button",class='btn btn-success pull-right' name="user",id='send',value='chat')
-
-										tr
-											td
-												|user2
-												input(type="button",class='btn btn-success pull-right' name="user",id='send',value='chat')
-										tr
-											td 
-												|user3
-												input(type="button",class='btn btn-success pull-right' name="user",id='send',value='chat')
-
+									tbody(id="userstable")
+									
 
 
 						

@@ -23,13 +23,27 @@ app.engine('jade', require('jade').__express);
 app.get('/',function(req,res){
 	res.render('index');
 });
-var connections = [];
+var users = [];
+
 var io = require('socket.io').listen(app.listen(port));
+
 io.sockets.on('connection', function (socket) {
-	socket.emit('message', { message: 'welcome to the chat' });
- 	socket.on('send', function (data) {
- 		io.sockets.emit('message', data);
- 	});
+
+	console.log(socket.id);
+	io.sockets.emit('newuser',users);
+	//emmiting to every users who is connected
+	socket.emit('welcome', { message: 'welcome to the chat' });
+	
+	//adding a new user
+	socket.on('newuser',function(data){
+		users.push(data.message);		
+		io.sockets.emit('newuser',users);
+	})
+	//send from the clints
+	socket.on('send', function (data) {
+		io.sockets.emit('message', data);
+	});
+ 	
  });
 
 
