@@ -23,7 +23,7 @@ app.engine('jade', require('jade').__express);
 app.get('/',function(req,res){
 	res.render('index');
 });
-var users = [];
+var users = new Array();
 
 var io = require('socket.io').listen(app.listen(port));
 
@@ -36,9 +36,10 @@ io.sockets.on('connection', function (socket) {
 	
 	//adding a new user
 	socket.on('newuser',function(data){
-		users.push(data.message);		
+		users['helo']= socket;
 		io.sockets.emit('newuser',users);
 	})
+	
 	//send from the clints
 	socket.on('send', function (data) {
 		io.sockets.emit('message', data);
