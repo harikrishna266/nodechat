@@ -1,7 +1,8 @@
 var express =  require('express');
 var app 	=	express();
 var port 	= 3000;
-
+//adding underscore
+var _ = require('underscore')._;
 
 //set the view folder
 app.set('views',__dirname+'/tpl');
@@ -28,18 +29,29 @@ var users = new Array();
 var io = require('socket.io').listen(app.listen(port));
 
 io.sockets.on('connection', function (socket) {
-
-	console.log(socket.id);
-	io.sockets.emit('newuser',users);
+	
+	var usersnames = _.keys(users);
+	io.sockets.emit('newuser',usersnames);
 	//emmiting to every users who is connected
 	socket.emit('welcome', { message: 'welcome to the chat' });
 	
 	//adding a new user
 	socket.on('newuser',function(data){
-		users['helo']= socket;
-		io.sockets.emit('newuser',users);
+		users[data.message]= socket;
+		var usersnames = _.keys(users);
+		io.sockets.emit('newuser',usersnames);
 	})
-	
+	socket.on('disconnect', function() {
+		var usersnames = _.keys(users);
+		_.each(usersnames,function(v){		
+			if((socket.id)===users[v].id){
+				delete users[v]
+				var usersnames = _.keys(users);
+				io.sockets.emit('newuser',usersnames);
+			}
+
+		})
+	});
 	//send from the clints
 	socket.on('send', function (data) {
 		io.sockets.emit('message', data);

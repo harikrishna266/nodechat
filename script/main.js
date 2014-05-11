@@ -9,14 +9,16 @@ $(document).ready(function(){
 	});
 
 	socket.on('newuser',function(data){
+		console.log(data);
 		var table = "";
 		$.each(data,function(i,item){
 			console.log(item);
-			table += '<tr><td>'+item+' <input type="button" class=\'btn btn-success pull-right\' name="user" id=\'send\',value=\'chat\'/></td></tr>';
+			table += '<tr><td>'+item+' <input type="button" class=\'btn btn-success pull-right\' name="user" id=\'send\' value=\'chat\'/></td></tr>';
 		})
 		$("#userstable").html(table);
 
 	});
+
 
 
 	socket.on('message',function(data){
