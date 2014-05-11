@@ -39,7 +39,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('newuser',function(data){
 		users[data.message]= socket;
 		var usersnames = _.keys(users);
-		io.sockets.emit('newuser',usersnames);
+		socket.broadcast.emit('newuser',usersnames);
 	})
 	socket.on('disconnect', function() {
 		var usersnames = _.keys(users);
