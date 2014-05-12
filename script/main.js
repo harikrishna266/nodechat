@@ -81,11 +81,11 @@ $(document).ready(function(){
         photo.width = video.clientWidth;
         photo.height = video.clientHeight;
         context.drawImage(video, 0, 0, photo.width, photo.height);
-        var imagedata = context.getImageData( 0, 0, photo.width, photo.height);
-        socket.emit('video', {video: imagedata,chatto:chatto});
-  	 	 var canvas = document.getElementById('other');
-         var contextother = canvas.getContext('2d');
-         contextother.putImageData(imagedata,100,100);
+        var imagedata = context.getImageData(0,0,photo.width,photo.width);
+      //**/  socket.emit('video', {video: imagedata,chatto:chatto});
+  	 	 var canvasnew = document.getElementById('other');
+         var contextother = canvasnew.getContext('2d');
+         contextother.putImageData(imagedata,0,0);
 
         requestAnimationFrame(takePhoto);
 
